@@ -51,7 +51,7 @@ function element_validate_direction($element){
   }
 }
 function element_validate_special_char($element){
-  $string_all_letters_and_chars = "abcdefghijklmnopqrstuvwxyz,./?;:\"-_! ";
+  $string_all_letters_and_chars = "abcdefghijklmnopqrstuvwxyz ,./<>?;':[]\{}|~!@\# $%^&*()_+=-";
   $accepted_chars = str_split($string_all_letters_and_chars);
   $phrase = strtolower($element['#value']);
   $phrase_array = str_split($phrase);
