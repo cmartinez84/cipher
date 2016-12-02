@@ -50,12 +50,38 @@ function element_validate_direction($element){
   }
 }
 function cipher_form_submit($form, &$form_state){
-  $all_letters = array("a", "b", "c", "d", "f", "g", "h", "i", "j", "k", "l", "m", "n",  "o",  "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z");
+  $all_letters = array("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n",  "o",  "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z");
   $direction = $form_state['values']['direction'];
   $shift_value = $form_state['values']['shift_value'];
-  $phrase = $form_state['values']['phrase'];
+  $phrase = strtolower($form_state['values']['phrase']);
+  $phrase_array = str_split($phrase);
+  $output = array();
+  $shift_value = $shift_value % 26;
+  if($direction == "left"){
+    $shift_value = 0 - $shift_value;
+  }
+  foreach ($phrase_array as $key => $letter) {
+    if(in_array($letter, $all_letters)){
+      $position = array_search($letter, $all_letters);
+      if(($position + $shift_value) < 0 ){
+        $position = $shift_value + 26 + $position;
+        $output[] = $all_letters[$position];
+      }
+      elseif(($position + $shift_value) > 25){
+        $position = $shift_value + $position - 26;
+        $output[] = $all_letters[$position];
+      }
+      else{
+        $output[] = $all_letters[$position + $shift_value];
+      }
+    }
+    else{
+      $output[] = $letter;
+    }
+  };
+  $_SESSION['results'] = implode($output, "");
   $form_state['redirect'] = 'cipher_results_page';
 }
 function cipher_results(){
-  return "Hurray, success";
+  return $_SESSION['results'];
 }
