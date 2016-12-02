@@ -15,18 +15,21 @@
       '#type' => 'textfield',
       '#description' => t('Enter a number of places you would like each letter shifted'),
       '#required' => TRUE,
+      '#element_validate' => array('element_validate_integer_positive'),
     );
     $form['direction'] = array(
       '#title' => 'Direction',
       '#type' => 'textfield',
       '#description' => t('Would you like to shift each letter to the left or right?'),
       '#required' => TRUE,
+      '#element_validate' => array('element_validate_direction'),
     );
     $form['phrase'] = array(
       '#title' => 'Entry',
       '#type'=> 'textfield',
       '#description' => t('Enter a string you would like to encrypt'),
       '#required' => TRUE,
+      '#element_validate' => array('element_validate_letters');
     );
     $form['submit'] = array(
       '#type' => 'submit',
@@ -34,3 +37,15 @@
     );
     return $form;
   }
+  
+function element_validate_direction($element){
+  $direction = strtolower($element['#value']);
+  if($direction != 'right' && $direction != 'left'){
+    form_error($element, t('In the West we usually right our alphabets, a-z from "left" to "right". Please type on e of those two directions'));
+  }
+}
+
+
+// function element_validate_letters($element){
+//   $all_letters = array("a", "b", "c", "d", "f", "g", "h", "i", "j", "k", "l", "m", "n",  "o",  "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z");
+// }
