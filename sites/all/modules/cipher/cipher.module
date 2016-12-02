@@ -7,6 +7,12 @@
       'access callback' => TRUE,
       'type' => MENU_NORMAL_ITEM,
     );
+    $items['cipher_results_page'] = array(
+      'title' => 'Cipher Results Page',
+      'page callback' => 'cipher_results',
+      'access callback' => TRUE,
+      'type' => MENU_CALLBACK,
+    );
     return $items;
   }
   function cipher_form(){
@@ -29,7 +35,6 @@
       '#type'=> 'textfield',
       '#description' => t('Enter a string you would like to encrypt'),
       '#required' => TRUE,
-      '#element_validate' => array('element_validate_letters');
     );
     $form['submit'] = array(
       '#type' => 'submit',
@@ -37,15 +42,20 @@
     );
     return $form;
   }
-  
+
 function element_validate_direction($element){
   $direction = strtolower($element['#value']);
   if($direction != 'right' && $direction != 'left'){
     form_error($element, t('In the West we usually right our alphabets, a-z from "left" to "right". Please type on e of those two directions'));
   }
 }
-
-
-// function element_validate_letters($element){
-//   $all_letters = array("a", "b", "c", "d", "f", "g", "h", "i", "j", "k", "l", "m", "n",  "o",  "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z");
-// }
+function cipher_form_submit($form, &$form_state){
+  $all_letters = array("a", "b", "c", "d", "f", "g", "h", "i", "j", "k", "l", "m", "n",  "o",  "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z");
+  $direction = $form_state['values']['direction'];
+  $shift_value = $form_state['values']['shift_value'];
+  $phrase = $form_state['values']['phrase'];
+  $form_state['redirect'] = 'cipher_results_page';
+}
+function cipher_results(){
+  return "Hurray, success";
+}
