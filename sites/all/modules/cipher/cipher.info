@@ -1,0 +1,5 @@
+name = Cipher
+description = Create a page for converting a string through an ancient encryption technique known as the shift cipher
+package = My Custom Modules
+core = 7.x
+files[] = cipher.module
