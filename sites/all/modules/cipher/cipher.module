@@ -35,6 +35,7 @@
       '#type'=> 'textfield',
       '#description' => t('Enter a string you would like to encrypt'),
       '#required' => TRUE,
+      '#element_validate' => array('element_validate_special_char'),
     );
     $form['submit'] = array(
       '#type' => 'submit',
@@ -49,8 +50,22 @@ function element_validate_direction($element){
     form_error($element, t('In the West we usually right our alphabets, a-z from "left" to "right". Please type on e of those two directions'));
   }
 }
+function element_validate_special_char($element){
+  $string_all_letters_and_chars = "abcdefghijklmnopqrstuvwxyz,./?;:\"-_! ";
+  $accepted_chars = str_split($string_all_letters_and_chars);
+  $phrase = strtolower($element['#value']);
+  $phrase_array = str_split($phrase);
+  foreach ($phrase_array as $key => $letter) {
+    if(!in_array($letter, $accepted_chars)){
+      form_error($element, t('Only letters and standard puctuation are accepted'));
+      break;
+    }
+  }
+}
+
 function cipher_form_submit($form, &$form_state){
-  $all_letters = array("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n",  "o",  "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z");
+  $string_accepted_chars = "abcdefghijklmnopqrstuvwxyz";
+  $all_letters = str_split($string_accepted_chars);
   $direction = $form_state['values']['direction'];
   $shift_value = $form_state['values']['shift_value'];
   $phrase = strtolower($form_state['values']['phrase']);
