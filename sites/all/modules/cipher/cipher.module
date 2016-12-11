@@ -62,6 +62,7 @@ function element_validate_special_char($element){
     }
   }
 }
+// $myrow['content'] = str_replace(' ', '&nbsp;', $myrow['content']);
 
 function cipher_form_submit($form, &$form_state){
   $string_accepted_chars = "abcdefghijklmnopqrstuvwxyz";
@@ -94,9 +95,14 @@ function cipher_form_submit($form, &$form_state){
       $output[] = $letter;
     }
   };
-  $_SESSION['results'] = implode($output, "");
+  foreach ($output as $key => $value) {
+    if($value == ' '){
+        $output[$key] = '&nbsp';
+    }
+  }
+  $_SESSION['results'] = implode($output);
   $form_state['redirect'] = 'cipher_results_page';
 }
 function cipher_results(){
-  return $_SESSION['results'];
+  return  $_SESSION['results'];
 }
