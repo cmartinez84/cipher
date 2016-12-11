@@ -15,7 +15,7 @@ _This app's sole purpose is to produce a custom module which will encrypt an inp
 |many characters can be entered at once an they will all receive the same treatment per use| "buttons and bows"| "cvuupot boe cpxt"|
 | spaces and special characters typically used in written language are accepted, but do not get any translated |"buttons & bows" "right" "1"| "cvuupot & cpxt"
 |
-| special characters are not accepted and  the form will not submit| "button & bows	&#167| "| error message will alert the user|
+| other special characters and foreign characters outside of  are not accepted and  the form will not submit| "ß utton & ßows 😊 | "| error message will alert the user|
 |only "right" and "left" are acceptable inputs for direction| "kitty-corner"| error message|
 |only positive integers greater than 0 are allowed for the shift value| -2.3| error message|
 
