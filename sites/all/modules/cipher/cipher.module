@@ -47,7 +47,7 @@
 function element_validate_direction($element){
   $direction = strtolower($element['#value']);
   if($direction != 'right' && $direction != 'left'){
-    form_error($element, t('In the West we usually right our alphabets, a-z from "left" to "right". Please type on e of those two directions'));
+    form_error($element, t('In the West we usually right our alphabets, a-z from "left" to "right". Please type one of those two directions'));
   }
 }
 function element_validate_special_char($element){
@@ -62,7 +62,6 @@ function element_validate_special_char($element){
     }
   }
 }
-// $myrow['content'] = str_replace(' ', '&nbsp;', $myrow['content']);
 
 function cipher_form_submit($form, &$form_state){
   $string_accepted_chars = "abcdefghijklmnopqrstuvwxyz";
